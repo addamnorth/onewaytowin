@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Seven Way Card Game</title>
+	<style type="text/css">
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+		button {
+			margin: 10px;
+			padding: 10px;
+			font-size: 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: lightgray;
+			cursor: pointer;
+		}
+		button:hover {
+			background-color: gray;
+		}
+		#result {
+			font-size: 24px;
+			font-weight: bold;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Seven Way Card Game</h1>
+	<p>Select your card:</p>
+	<button id="heart">Heart</button>
+	<button id="poison">Poison</button>
+	<button id="metal">Metal</button>
+	<button id="water">Water</button>
+	<button id="earth">Earth</button>
+	<button id="fire">Fire</button>
+	<button id="air">Air</button>
+	<div id="result"></div>
+	<script type="text/javascript">
+		const cards = ['heart', 'poison', 'metal', 'water', 'earth', 'fire', 'air'];
+		const beats = {
+			'heart': ['poison', 'air', 'water'],
+			'poison': ['air', 'earth', 'water'],
+			'metal': ['heart', 'poison', 'air'],
+			'water': ['earth', 'fire', 'metal'],
+			'earth': ['fire', 'earth', 'heart'],
+			'fire': ['metal', 'heart', 'poison'],
+			'air': ['water', 'earth', 'fire']
+		};
+		const buttons = document.querySelectorAll('button');
+		const resultDiv = document.querySelector('#result');
+		buttons.forEach(button => {
+			button.addEventListener('click', () => {
+				const playerCard = button.id;
+				const computerCard = cards[Math.floor(Math.random() * cards.length)];
+				if (beats[playerCard].includes(computerCard)) {
+					resultDiv.innerHTML = `You chose ${playerCard}.<br>The computer chose ${computerCard}.<br>You win!`;
+				} else if (beats[computerCard].includes(playerCard)) {
+					resultDiv.innerHTML = `You chose ${playerCard}.<br>The computer chose ${computerCard}.<br>You lose!`;
+				} else {
+					resultDiv.innerHTML = `You chose ${playerCard}.<br>The computer chose ${computerCard}.<br>It's a tie!`;
+				}
+			});
+		});
+	</script>
+</body>
+</html>
